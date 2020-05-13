@@ -39,8 +39,8 @@ def _add_():
     if ret == 0:
         conn=connection()
         cur=conn.cursor()
-        cur.execute("CREATE TABLE IF NOT EXISTS CUSTOMERS(NAME TEXT,PHONE_NO INTEGER,ROOM_NO INTEGER,ADDRESS TEXT)")
-        cur.execute("insert into CUSTOMERS values(?,?,?,?)",(customer_name.get(),int(phone_no.get()),int(room_no.get()),address.get()))
+        cur.execute("CREATE TABLE IF NOT EXISTS CUSTOMERS(NAME TEXT,PHONE_NO INTEGER,ROOM_NO INTEGER,ADDRESS TEXT,ROOM_TYPE TEXT)")
+        cur.execute("insert into CUSTOMERS values(?,?,?,?,?)",(customer_name.get(),int(phone_no.get()),int(room_no.get()),address.get(),var.get()))
         conn.commit()
         conn.close()
         t1.insert(END,"\nADDED SUCCESSFULLY\n")
@@ -76,7 +76,7 @@ def clear():
 if __name__=="__main__":
     root=Tk()
     root.title("Hotel Management System")
-
+    root.config(bg="LightCyan2")
     customer_name=StringVar()
     room_no=StringVar()
     phone_no=StringVar()
@@ -90,39 +90,56 @@ if __name__=="__main__":
 
     l3=Label(root,text="Room number")
     l3.place(x=0,y=60)
+
     l4=Label(root,text="Address")
     l4.place(x=0,y=90)
 
+    l5=Label(root,text="Room type")
+    l5.place(x=0,y=120)
+
 
     e1=Entry(root,textvariable=customer_name)
-    e1.place(x=100,y=0)
+    e1.place(x=120,y=0)
 
     e2=Entry(root,textvariable=phone_no)
-    e2.place(x=100,y=30)
+    e2.place(x=120,y=30)
 
     e3=Entry(root,textvariable=room_no)
-    e3.place(x=100,y=60)
+    e3.place(x=120,y=60)
 
     e4=Entry(root,textvariable=address)
-    e4.place(x=100,y=90)
+    e4.place(x=120,y=90)
+
+    OptionList = [
+    "Super deluxe",
+    "Deluxe",
+    "Normal",
+    ]
+
+    var = StringVar(root)
+    var.set(OptionList[0])
+
+    opt = OptionMenu(root, var, *OptionList)
+    opt.config(width=15, font=('Helvetica', 8))
+    opt.place(x=120,y=120)
 
     t1=Text(root,width=80,height=20)
     t1.grid(row=0,column=1)
 
 
-    b1=Button(root,text="ADD CUSTOMER",command=_add_,width=40)
-    b1.grid(row=11,column=0)
+    b1=Button(root,text="ADD CUSTOMER",command=_add_,width=30,bg="light slate blue",activebackground="slate blue")
+    b1.grid(row=11,column=0,padx=10)
 
-    b2=Button(root,text="VIEW ALL CUSTOMERS",command=_view_,width=40)
-    b2.grid(row=12,column=0)
+    b2=Button(root,text="VIEW ALL CUSTOMERS",command=_view_,width=30,bg="light slate blue",activebackground="slate blue")
+    b2.grid(row=12,column=0,padx=10)
 
-    b3=Button(root,text="DELETE CUSTOMER",command=_delete_,width=40)
-    b3.grid(row=13,column=0)
+    b3=Button(root,text="DELETE CUSTOMER",command=_delete_,width=30,bg="light slate blue",activebackground="slate blue")
+    b3.grid(row=13,column=0,padx=10)
 
-    b4=Button(root,text="CLOSE",command=close,width=40)
-    b4.grid(row=14,column=0)
+    b4=Button(root,text="CLOSE",command=close,width=30,bg="red3",activebackground="red4")
+    b4.grid(row=14,column=0,padx=10)
 
-    b5=Button(root,text="CLEAR",command=clear,width=40)
-    b5.grid(row=15,column=0)
+    b5=Button(root,text="CLEAR",command=clear,width=30,bg="thistle3",activebackground="thistle4")
+    b5.grid(row=15,column=0,padx=10)
 
     root.mainloop()
